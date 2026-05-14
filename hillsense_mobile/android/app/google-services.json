@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "171188353140",
+    "firebase_url": "https://hillsenseai-default-rtdb.firebaseio.com",
+    "project_id": "hillsenseai",
+    "storage_bucket": "hillsenseai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171188353140:android:b85d9a44972c61f2ab3921",
+        "android_client_info": {
+          "package_name": "com.example.hillsense_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiLPqnEs6RhTCTtb4H3ulG3xUEydNFjyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
