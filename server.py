@@ -125,14 +125,23 @@ def predict():
             moisture = 0.0
 
         # =============================
-        # STATIC VALUES
+        # DYNAMIC VALUES
         # =============================
 
-        n = 50
-        p = 40
-        k = 45
-        ph = 6.5
-        rainfall = 50
+        n = int(max(20, min(90, moisture + humidity / 2)))
+
+        p = int(max(15, min(80, humidity)))
+
+        k = int(max(20, min(85, temperature * 2)))
+
+        ph = round(
+            5.5 + (humidity / 100),
+            2
+        )
+
+        rainfall = int(
+            humidity * 1.5
+        )
 
         # =============================
         # FEATURE ENGINEERING
@@ -235,7 +244,7 @@ def predict():
         )
 
         # =============================
-        # FIXED LABELS
+        # LABELS
         # =============================
 
         labels = [
@@ -254,43 +263,73 @@ def predict():
 
         soil_quality = labels[predicted_class]
 
+        # =================================
+        # REALTIME SOIL QUALITY ADJUSTMENT
+        # =================================
+
+        if moisture < 20:
+
+            soil_quality = "Poor"
+
+        elif moisture > 70 and humidity > 70:
+
+            soil_quality = "Good"
+
+        elif temperature > 35:
+
+            soil_quality = "Poor"
+
+        else:
+
+            soil_quality = "Medium"
+
         # =============================
         # IRRIGATION
         # =============================
 
-        if moisture < 30:
+        if moisture < 20:
 
             irrigation = (
-                'High irrigation required'
+                'Very High irrigation required'
             )
 
-        elif moisture < 50:
+        elif moisture < 40:
 
             irrigation = (
                 'Moderate irrigation required'
             )
 
+        elif moisture < 60:
+
+            irrigation = (
+                'Low irrigation required'
+            )
+
         else:
 
             irrigation = (
-                'Soil moisture sufficient'
+                'No irrigation needed'
             )
 
         # =============================
         # CROP RECOMMENDATION
         # =============================
 
-        if temperature > 30 and humidity > 60:
-
-            crop = 'Rice'
-
-        elif moisture < 40:
+        if moisture < 25:
 
             crop = 'Millets'
 
-        elif humidity < 50:
+        elif temperature > 32:
+
+            crop = 'Rice'
+
+        elif humidity < 40:
 
             crop = 'Wheat'
+
+        elif soil_quality == 'Good':
+
+            crop = 'Sugarcane'
 
         else:
 
@@ -312,10 +351,16 @@ def predict():
                 'Use Organic Compost'
             )
 
-        else:
+        elif soil_quality == 'Good':
 
             fertilizer = (
                 'Minimal fertilizer needed'
+            )
+
+        else:
+
+            fertilizer = (
+                'Balanced fertilizer recommended'
             )
 
         # =============================
