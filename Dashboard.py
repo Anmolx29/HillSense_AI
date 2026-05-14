@@ -2,6 +2,7 @@ import streamlit as st
 import firebase_admin
 import pandas as pd
 import plotly.graph_objects as go
+import json
 
 from firebase_admin import credentials
 from firebase_admin import db
@@ -50,8 +51,14 @@ h1, h2, h3 {
 
 if not firebase_admin._apps:
 
+    firebase_key = json.loads(
+
+        st.secrets["FIREBASE_KEY"]
+
+    )
+
     cred = credentials.Certificate(
-        'firebase_key.json'
+        firebase_key
     )
 
     firebase_admin.initialize_app(cred, {
@@ -99,16 +106,28 @@ if not sensor_data:
 # EXTRACT SENSOR VALUES
 # =====================================
 
-temperature = sensor_data.get(
-    'temperature', 0
+temperature = float(
+
+    sensor_data.get(
+        'temperature', 0
+    )
+
 )
 
-humidity = sensor_data.get(
-    'humidity', 0
+humidity = float(
+
+    sensor_data.get(
+        'humidity', 0
+    )
+
 )
 
-moisture = sensor_data.get(
-    'moisture', 0
+moisture = float(
+
+    sensor_data.get(
+        'moisture', 0
+    )
+
 )
 
 # =====================================
