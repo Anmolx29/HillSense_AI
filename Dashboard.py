@@ -3,6 +3,7 @@ import firebase_admin
 import pandas as pd
 import plotly.graph_objects as go
 import json
+import time
 
 from firebase_admin import credentials
 from firebase_admin import db
@@ -109,11 +110,38 @@ prediction_data = prediction_ref.get()
 
 if not sensor_data:
 
-    st.warning(
-        "⚠ No sensor data found."
+    st.error(
+        "🔴 Sensors Offline / Powered Off"
     )
 
     st.stop()
+
+# =====================================
+# SENSOR STATUS CHECK
+# =====================================
+
+last_seen = sensor_data.get(
+    'last_seen',
+    0
+)
+
+current_time = int(time.time() * 1000)
+
+time_difference = current_time - last_seen
+
+if time_difference > 30000:
+
+    st.error(
+        "🔴 Sensors Offline / Powered Off"
+    )
+
+    st.stop()
+
+else:
+
+    st.success(
+        "🟢 Sensors Online"
+    )
 
 # =====================================
 # EXTRACT SENSOR VALUES
