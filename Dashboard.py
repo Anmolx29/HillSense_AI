@@ -125,11 +125,11 @@ last_seen = sensor_data.get(
     0
 )
 
-current_time = int(time.time() * 1000)
+current_time = int(time.time())
 
 time_difference = current_time - last_seen
 
-if time_difference > 30000:
+if time_difference > 30:
 
     st.error(
         "🔴 Sensors Offline / Powered Off"
