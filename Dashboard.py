@@ -6,6 +6,7 @@ import json
 
 from firebase_admin import credentials
 from firebase_admin import db
+from streamlit_autorefresh import st_autorefresh
 
 # =====================================
 # PAGE CONFIG
@@ -15,6 +16,18 @@ st.set_page_config(
     page_title="HillSense AI",
     page_icon="🌱",
     layout="wide"
+)
+
+# =====================================
+# AUTO REFRESH
+# =====================================
+
+st_autorefresh(
+
+    interval=5000,
+
+    key="dashboardrefresh"
+
 )
 
 # =====================================
